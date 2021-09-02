@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OpenshiftController {
 	
-	@Value("$(message:default message)")
+	@Value("${message:default message}")
 	private String message;
 
 	@GetMapping("/user")
