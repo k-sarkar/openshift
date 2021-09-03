@@ -5,4 +5,4 @@ EXPOSE 8080
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean install && cp /home/app/target/*.jar /home/app/application.jar && rm /home/app/target/*.jar
-ENTRYPOINT ["java","-jar","/home/app/target/application.jar"]
+ENTRYPOINT ["java","-jar","/home/app/application.jar"]
