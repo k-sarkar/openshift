@@ -9,6 +9,12 @@ public class OpenshiftController {
 	
 	@Value("${message:default message}")
 	private String message;
+	
+	@Value("${message:default config message}")
+	private String configMessage;
+	
+	@Value("${message:default secret message}")
+	private String secretMessage;
 
 	@GetMapping("/user")
 	public String getUser() {
@@ -16,8 +22,20 @@ public class OpenshiftController {
 	}
 	
 	@GetMapping("/message")
-	public String getGetmessage() {
+	public String getGetMessage() {
 		return message;
 	}
+	
+	@GetMapping("/config/message")
+	public String getGetConfigMessage() {
+		return configMessage;
+	}
+	
+	
+	@GetMapping("/secret/message")
+	public String getGetSecretMessage() {
+		return secretMessage;
+	}
+	
 	
 }
