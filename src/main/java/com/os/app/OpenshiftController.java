@@ -10,10 +10,10 @@ public class OpenshiftController {
 	@Value("${message:default message}")
 	private String message;
 	
-	@Value("${message:default config message}")
+	@Value("${config_message:default config message}")
 	private String configMessage;
 	
-	@Value("${message:default secret message}")
+	@Value("${secret_message:default secret message}")
 	private String secretMessage;
 
 	@GetMapping("/user")
