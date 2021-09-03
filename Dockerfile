@@ -1,7 +1,8 @@
-FROM maven:3.8.2-jdk-8
+FROM registry.redhat.io/ubi8/ubi-minimal:8.4-208
+USER root
+RUN microdnf install java-1.8.0-openjdk-devel -y && microdnf install maven -y
+EXPOSE 8080
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN java -version
-RUN mvn -f /home/app/pom.xml clean install && ls -l /home/app/target/
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/home/app/target/openshift-0.0.1-SNAPSHOT.jar"]
+RUN mvn -f /home/app/pom.xml clean install && cp /home/app/target/*.jar /home/app/application.jar && rm /home/app/target/*.jar
+ENTRYPOINT ["java","-jar","/home/app/target/application.jar"]
