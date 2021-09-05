@@ -18,7 +18,7 @@ public class OpenshiftController {
 
 	@GetMapping("/user")
 	public String getUser() {
-		return "Koushik Sarkar";
+		return "Updated user Koushik Sarkar";
 	}
 	
 	@GetMapping("/message")
