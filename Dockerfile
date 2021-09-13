@@ -1,6 +1,6 @@
 FROM registry.redhat.io/ubi8/ubi-minimal:8.4-208
 USER root
-RUN microdnf install java-1.8.0-openjdk-devel -y && microdnf install maven -y
+RUN microdnf install java-1.8.0-openjdk-devel -y && microdnf install maven -y && sudo yum install tar -y
 EXPOSE 8080
 COPY src /home/app/src
 COPY pom.xml /home/app
