@@ -10,6 +10,6 @@ ENV STATUS_CHECK_FILE_PATH="/tmp/check"
 EXPOSE 8080
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN touch /home/app/additional.properties
+RUN mkdir /properties && touch /properties/additional.properties
 RUN mvn -f /home/app/pom.xml clean install && cp /home/app/target/*.jar /home/app/application.jar && rm /home/app/target/*.jar
 ENTRYPOINT ["java","-jar","/home/app/application.jar"]
