@@ -3,7 +3,7 @@ USER root
 RUN microdnf install java-1.8.0-openjdk-devel -y \
     && microdnf install maven -y \
     && microdnf install tar -y \
-    && microdnf install vim-enhanced -y \
+    && microdnf install vim -y \
     && touch /tmp/check \
     && echo "health.check=true" >> /tmp/check \
     && echo "readiness.check=true" >> /tmp/check
