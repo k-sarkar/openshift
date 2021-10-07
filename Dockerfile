@@ -6,7 +6,8 @@ RUN microdnf install java-1.8.0-openjdk-devel -y \
     && microdnf install vim -y \
     && touch /tmp/check \
     && echo "health.check=true" >> /tmp/check \
-    && echo "readiness.check=true" >> /tmp/check
+    && echo "readiness.check=true" >> /tmp/check \
+    && chmod 777 /tmp/check
 ENV STATUS_CHECK_FILE_PATH="/tmp/check"
 EXPOSE 8080
 COPY src /home/app/src
