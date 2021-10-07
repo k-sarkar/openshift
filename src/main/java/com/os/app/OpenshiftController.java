@@ -4,15 +4,20 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OpenshiftController {
+	
+	static Integer healthCounter = 0;
 	
 	@Value("${message:default message}")
 	private String message;
@@ -45,46 +50,28 @@ public class OpenshiftController {
 	}
 	
 	@GetMapping("/health")
-	public ResponseEntity getHelathCheck() throws IOException {
-		
-		try {
-			FileSystemResource file = new FileSystemResource("/tmp/check");
-			BufferedReader br = new BufferedReader(new FileReader(file.getFile()));
-			String line;
-		    while ((line = br.readLine()) != null) {
-		    	if(line.startsWith("health.check")) {
-		    		String value = line.substring(line.indexOf("=")+1, line.length());
-		    		if(value.equals("false"))
-		    			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
-		    	}
-		    		
-		    }
-		}catch(IOException e) {
-			
+	public ResponseEntity getHelathCheck() { 
+
+		if(healthCounter%4==0) {
+			healthCounter ++;
+			return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 		}
-		return new ResponseEntity(HttpStatus.OK);
+		else {
+			healthCounter ++;
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		
+		
 
 	}
 	
-	@GetMapping("/readiness")
-	public ResponseEntity<String> getReadinessCheck() {
+	@GetMapping("/readiness/{value}")
+	public ResponseEntity<String> getReadinessCheck(@PathVariable String value) {
 		
-		try {
-			FileSystemResource file = new FileSystemResource("/tmp/check");
-			BufferedReader br = new BufferedReader(new FileReader(file.getFile()));
-			String line;
-		    while ((line = br.readLine()) != null) {
-		    	if(line.startsWith("readiness.check")) {
-		    		String value = line.substring(line.indexOf("=")+1, line.length());
-		    		if(value.equals("false"))
-		    			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
-		    	}
-		    		
-		    }
-		}catch(IOException e) {
-			
-		}
-		return new ResponseEntity<String>(HttpStatus.OK);
+		if(value.equalsIgnoreCase("Y"))
+			return new ResponseEntity<String>(HttpStatus.OK);
+		else
+			return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
 
 	}
 	
