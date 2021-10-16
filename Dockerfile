@@ -8,4 +8,5 @@ COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mkdir /properties && touch /properties/additional.properties
 RUN mvn -f /home/app/pom.xml clean install && cp /home/app/target/*.jar /home/app/application.jar && rm /home/app/target/*.jar
+RUN echo "image version 1"
 ENTRYPOINT ["java","-jar","/home/app/application.jar"]
